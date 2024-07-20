@@ -1,4 +1,5 @@
 package com.Raghab.shopApp.controller;
+
 import com.Raghab.shopApp.entity.Orders;
 import com.Raghab.shopApp.entity.User;
 import com.Raghab.shopApp.mappers.OrderMapper;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,14 +25,15 @@ public class OrderController {
     OrderMapper orderMapper;
 
     UserService userService;
-    public OrderController(OrderRepository orderRepository, OrderMapper orderMapper,UserService userService){
+
+    public OrderController(OrderRepository orderRepository, OrderMapper orderMapper, UserService userService) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
         this.userService = userService;
     }
 
     @PostMapping
-    public Orders createOrder(@Valid @RequestBody Orders order){
+    public Orders createOrder(@Valid @RequestBody Orders order) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findBYUserName(authentication.getName());
         order.setUser(user);
@@ -39,7 +42,7 @@ public class OrderController {
 
 
     @GetMapping
-    public List<Orders> getAll(){
+    public List<Orders> getAll() {
         return orderRepository.findAll();
     }
 
@@ -49,18 +52,17 @@ public class OrderController {
 //    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException exp){
-        var errors = new HashMap<String,String>();
-        exp.getBindingResult().getAllErrors().forEach(error->{
-            var fieldName =((FieldError)error).getField();
+    public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException exp) {
+        var errors = new HashMap<String, String>();
+        exp.getBindingResult().getAllErrors().forEach(error -> {
+            var fieldName = ((FieldError) error).getField();
             var errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
 
-        return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 
     }
-
 
 
 }
