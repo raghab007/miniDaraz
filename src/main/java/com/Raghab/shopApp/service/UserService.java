@@ -1,10 +1,7 @@
 package com.Raghab.shopApp.service;
-
 import com.Raghab.shopApp.entity.User;
 import com.Raghab.shopApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,5 +47,7 @@ public class UserService {
         return  false;
     }
 
-
+    public boolean deleteByUserName(String userName) {
+        return  true;
+    }
 }

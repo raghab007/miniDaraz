@@ -1,15 +1,17 @@
 package com.Raghab.shopApp.controller;
+import com.Raghab.shopApp.entity.Cart;
 import com.Raghab.shopApp.entity.Product;
 import com.Raghab.shopApp.entity.User;
+import com.Raghab.shopApp.repository.CartRepository;
 import com.Raghab.shopApp.service.ProductService;
 import com.Raghab.shopApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/public")
@@ -17,14 +19,17 @@ import java.util.List;
 //This annotation indicates that the bean is available only for the test profile
 public class PublicController {
 
-    UserService userService;
+   private final UserService userService;
 
-    ProductService productService;
+   private final ProductService productService;
+   private final CartRepository cartRepository;
 
     @Autowired
-    public PublicController(UserService userService,ProductService productService) {
+    public PublicController(UserService userService,ProductService productService,CartRepository cartRepository) {
         this.userService = userService;
         this.productService = productService;
+        this.cartRepository = cartRepository;
+
     }
 
     @GetMapping("/create-user")
@@ -32,9 +37,13 @@ public class PublicController {
         User user2 = userService.findBYUserName(user.getUserName());
         if (user2==null) {
             userService.createUser(user);
+            Cart cart = new Cart();
+            cart.setUser(user);
+            cartRepository.save(cart);
         }
         return "login";
     }
+
 
     @GetMapping("/products")
     public ModelAndView getallProducts(){
@@ -44,5 +53,15 @@ public class PublicController {
         modelAndView.setStatus(HttpStatus.OK);
         modelAndView.addObject("products",products);
         return  modelAndView;
+    }
+    @GetMapping("/login")
+    public String login(){
+        Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findBYUserName(authentication.getName());
+        return "login";
+
+    }
+
+    public void createCart() {
     }
 }

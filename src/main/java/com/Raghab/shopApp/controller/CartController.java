@@ -26,8 +26,11 @@ public class CartController {
     @Autowired
     UserService userService;
 
-    @PostMapping
+    @PostMapping()
     public Cart createCart(@RequestBody Cart cart) {
+        Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findBYUserName(authentication.getName());
+        cart.setUser(user);
         return cartRepository.save(cart);
     }
     @DeleteMapping("delete/{cart}")
@@ -36,10 +39,5 @@ public class CartController {
        String userName = authentication.getName();
        User user = userService.findBYUserName(userName);
        Cart cart = user.getCart();
-
-
-
-       
     }
-
 }

@@ -11,6 +11,7 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "_Order")
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

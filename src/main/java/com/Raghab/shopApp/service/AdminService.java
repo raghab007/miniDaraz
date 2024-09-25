@@ -2,6 +2,8 @@ package com.Raghab.shopApp.service;
 import com.Raghab.shopApp.entity.Product;
 import com.Raghab.shopApp.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,8 +17,9 @@ public class AdminService {
         return (ArrayList<Product>) productRepository.findAll();
     }
 
-    public Product addProduct(Product product){
-        return productRepository.save(product);
+    public  ResponseEntity<?> addProduct(Product product){
+       Product product1 =  productRepository.save(product);
+       return new ResponseEntity<>(product1, HttpStatus.OK);
     }
 
     public boolean removeById(Long id){
@@ -28,7 +31,7 @@ public class AdminService {
         return false;
     }
     public Product getById(Long productId){
-       return  productRepository.getById(productId);
+        return productRepository.getById(productId);
     }
 
     public boolean updateById(Long productId,Product product) {
@@ -37,10 +40,8 @@ public class AdminService {
             product1.setDescription(product.getDescription() != null && !product.getDescription().isEmpty() ? product.getDescription() : product1.getDescription());
             product1.setQuantity(product.getQuantity());
             return true;
-
         }
         return false;
     }
-
 
 }

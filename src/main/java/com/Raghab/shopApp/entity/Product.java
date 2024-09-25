@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
@@ -22,9 +25,9 @@ public class Product {
     private String description;
     @NotNull(message = "Brand cannot be null")
     private String brand;
-    @OneToOne(
-            mappedBy = "product"
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL
     )
-    private Cart cart;
-
+    private List<Product_Cart> productCarts = new ArrayList<>();
 }

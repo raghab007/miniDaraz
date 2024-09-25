@@ -1,19 +1,29 @@
 package com.Raghab.shopApp.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cart {
     @Id
-    Integer cartId;
-    @OneToOne
-    @JoinColumn(name = "product_id",nullable = true)
-    Product product;
-    @OneToOne
+   private Integer cartId;
+
+    @OneToOne()
     @JoinColumn(name = "user_id")
-    User user;
+    private  User user;
+
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+    private List<Product_Cart> productCarts  = new ArrayList<>();
+
 }
