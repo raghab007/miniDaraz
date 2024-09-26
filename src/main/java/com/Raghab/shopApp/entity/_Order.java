@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +14,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_Order")
-public class Orders {
+public class _Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long orderId;
@@ -25,5 +27,8 @@ public class Orders {
     @JoinColumn(name = "user_id")  // Ensure join column is not nullable
     @JsonBackReference
     private User user;
+
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    List<Product_Order> productOrders = new ArrayList<>();
 
 }

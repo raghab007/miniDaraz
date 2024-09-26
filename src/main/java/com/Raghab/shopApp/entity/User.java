@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDate;
+
 import java.util.List;
 @Entity
 @Getter
@@ -29,6 +29,6 @@ public class User {
     private Cart cart;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Orders> orders;
+    private List<_Order> orders;
 
 }

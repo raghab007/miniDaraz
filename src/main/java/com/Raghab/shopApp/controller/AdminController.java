@@ -1,8 +1,7 @@
 package com.Raghab.shopApp.controller;
-import com.Raghab.shopApp.entity.Orders;
+import com.Raghab.shopApp.entity._Order;
 import com.Raghab.shopApp.entity.Product;
 import com.Raghab.shopApp.repository.OrderRepository;
-import com.Raghab.shopApp.service.AdminService;
 import com.Raghab.shopApp.service.ProductService;
 import com.Raghab.shopApp.service.UserService;
 import jakarta.validation.Valid;
@@ -85,7 +84,7 @@ public class AdminController {
     }
 
     @GetMapping
-    public List<Orders> getAllOrders(){
+    public List<_Order> getAllOrders(){
         return  orderRepository.findAll();
     }
 
