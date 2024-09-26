@@ -17,9 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Cart {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Integer cartId;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "user_id")
     private  User user;
 

@@ -13,9 +13,10 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired UserRepository userRepository;
+    @Autowired
+    private  UserRepository userRepository;
 
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public void createUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -1,8 +1,10 @@
 package com.Raghab.shopApp.controller;
 import com.Raghab.shopApp.entity.Cart;
 import com.Raghab.shopApp.entity.Product;
+import com.Raghab.shopApp.entity.Product_Cart;
 import com.Raghab.shopApp.entity.User;
 import com.Raghab.shopApp.repository.CartRepository;
+import com.Raghab.shopApp.repository.Product_CartRepository;
 import com.Raghab.shopApp.service.ProductService;
 import com.Raghab.shopApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class PublicController {
 
    private final ProductService productService;
    private final CartRepository cartRepository;
+   @Autowired
+   Product_CartRepository productCartRepository;
 
     @Autowired
     public PublicController(UserService userService,ProductService productService,CartRepository cartRepository) {
@@ -32,16 +36,15 @@ public class PublicController {
 
     }
 
-    @GetMapping("/create-user")
-    public String createUser(@RequestBody User user) {
-        User user2 = userService.findBYUserName(user.getUserName());
-        if (user2==null) {
+    @PostMapping("/create-user")
+    public void createUser(@RequestBody User user) {
+      ////  User user2 = userService.findBYUserName(user.getUserName());
+       // if (user2==null) {
             userService.createUser(user);
             Cart cart = new Cart();
             cart.setUser(user);
-            cartRepository.save(cart);
-        }
-        return "login";
+             cartRepository.save(cart);
+
     }
 
 

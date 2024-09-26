@@ -2,16 +2,15 @@ package com.Raghab.shopApp.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Data
+
 public class Product_Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +21,11 @@ public class Product_Cart {
 
     @ManyToOne
     private  Cart cart;
+
+    private Integer quantity;
+
+    @Override
+    public String toString() {
+        return STR."Product_Cart{productCartId=\{productCartId}, product=\{product}, cart=\{cart}, quantity=\{quantity}\{'}'}";
+    }
 }

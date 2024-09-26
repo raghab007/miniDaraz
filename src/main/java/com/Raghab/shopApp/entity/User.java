@@ -19,17 +19,15 @@ public class User {
     private String password;
     @Column(name = "address")
     private String address;
-    @Column(name = "email",length = 255,unique = true)
+    @Column(name = "email",length = 255)
     private String email;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true)
     private String phoneNumber;
-    @Column(updatable = false)
-    private LocalDate dateOfBirth;
     String gender;
    private List<String> roles;
     @OneToOne(mappedBy = "user")
     private Cart cart;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Orders> orders;
 

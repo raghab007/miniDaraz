@@ -22,8 +22,9 @@ public class SpringSecurity  {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/user/**").authenticated()
+                        .requestMatchers("/cart/**").authenticated()
                         // Require authentication for URLs under /journal/ and /user/
-                        .requestMatchers("/admin/**").permitAll()            // Require ADMIN role for URLs under /admin/.anyRequest().permitAll()                         // Require authentication for all other requests
+                        .requestMatchers("/admin/**").permitAll()  .anyRequest().permitAll()          // Require ADMIN role for URLs under /admin/.anyRequest().permitAll()                         // Require authentication for all other requests
                 );
         // All other URLs require authentication
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
