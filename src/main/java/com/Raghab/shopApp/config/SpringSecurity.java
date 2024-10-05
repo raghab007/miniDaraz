@@ -1,13 +1,14 @@
 package com.Raghab.shopApp.config;
+
 import com.Raghab.shopApp.service.UserDetailsServiceImplementation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +25,8 @@ public class SpringSecurity  {
                         .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/cart/**").authenticated()
                         // Require authentication for URLs under /journal/ and /user/
-                        .requestMatchers("/admin/**").permitAll()  .anyRequest().permitAll()          // Require ADMIN role for URLs under /admin/.anyRequest().permitAll()                         // Require authentication for all other requests
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().permitAll()          // Require ADMIN role for URLs under /admin/.anyRequest().permitAll()                         // Require authentication for all other requests
                 );
         // All other URLs require authentication
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
