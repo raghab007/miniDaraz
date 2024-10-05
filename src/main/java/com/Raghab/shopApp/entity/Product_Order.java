@@ -1,8 +1,8 @@
 package com.Raghab.shopApp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +15,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Product_Order {
 
-    Integer productOrderId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    Product product;
 
+    private Product product;
+
+    private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "order_id")
-    _Order order;
+    private _Order order;
 
 }

@@ -1,10 +1,7 @@
 package com.Raghab.shopApp.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 @Entity
@@ -12,6 +9,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "user_")
+@Builder
 public class User {
     @Id
     private String userName;
@@ -24,10 +23,13 @@ public class User {
     @Column(unique = true)
     private String phoneNumber;
     String gender;
-   private List<String> roles;
+//    @ElementCollection
+//    @CollectionTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"))
+//    @Column(name = "role")
+   private String role;
     @OneToOne(mappedBy = "user")
     private Cart cart;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<_Order> orders;
 

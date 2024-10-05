@@ -2,7 +2,10 @@ package com.Raghab.shopApp.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ public class Product {
     private String description;
     @NotNull(message = "Brand cannot be null")
     private String brand;
+
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL
@@ -35,4 +39,6 @@ public class Product {
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     List<Product_Order> productOrders = new ArrayList<>();
 
+    @Lob
+    private  byte[] productImage;
 }
